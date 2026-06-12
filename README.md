@@ -1,91 +1,85 @@
 # 🧠 Local-DocuBrain-RAG-Engine
 
-An enterprise-grade, locally isolated Retrieval-Augmented Generation (RAG) engine. This system allows you to chat with complex local documentation, source files, and knowledge bases with absolute data privacy. It operates 100% offline using an optimized ingestion pipeline and local LLM inference models.
+An enterprise-grade, memory-optimized Retrieval-Augmented Generation (RAG) engine designed to chat with complex local documentation. Powered 100% locally and offline by **Ollama (Phi-3 & Nomic-Embed-Text)** using the **LlamaIndex** framework, this architecture guarantees absolute data privacy within an isolated local system environment.
 
 ---
 
-## 🎯 System Capabilities & Architecture
-* **Zero-Leak Data Privacy**: Designed for enterprise security boundaries. No data ever leaves your local environment (`fresh_venv`).
-* **Optimized Ingestion Pipeline**: Implements advanced structural text splitting and high-fidelity embedding generation for dense vector mapping.
-* **Deterministic Local Retrieval**: Uses a vectorized semantic search layer to inject hyper-relevant context windows directly into local LLM completion prompts.
+## 🎯 Engineering Highlights & Capabilities
+* **Persistent Vector Indexing**: Computes mathematical document embeddings once and caches the indices to disk (`db/`). Future applications boot instantly with zero CPU overhead.
+* **Bounded Context Windows**: Hard-restricts model context loops to `2048 tokens` to prevent system memory overload or massive RAM allocations during long generation passes.
+* **Deterministic Local Grounding**: Integrates strict prompt injection to force the model to answer questions using only localized facts, completely eliminating hallucinations.
 
 ---
 
-## ⚙️ Core Data Workflow
+## ⚙️ Core System Architecture
 
 ```mermaid
 graph TD
-    A[Raw Source Docs/PDFs] --> B(Recursive Text Splitter)
-    B --> C(Local Embedding Engine)
-    C --> D[Vector Store DB Index]
-    E[User Query] --> F(Semantic Similarity Search)
+    A[Raw Source Documents] --> B(SimpleDirectoryReader)
+    B --> C(OllamaEmbedding: nomic-embed-text)
+    C --> D[Persistent Storage Cache: /db]
+    E[User Query] --> F(LlamaIndex Retrieval Node)
     D --> F
-    F -->|Context-Infused Prompt| G[Local Ollama Daemon]
-    G --> H[Precise Deterministic Answer]
+    F -->|Bounded Context Window| G[Local Ollama Daemon: phi3]
+    G --> H[Deterministic Answer Output]
 
-    style B fill:#2a2a2a,stroke:#4f46e5,stroke-width:2px;
+    style C fill:#2a2a2a,stroke:#4f46e5,stroke-width:2px;
     style D fill:#1e1b4b,stroke:#818cf8,stroke-width:2px;
     style H fill:#064e3b,stroke:#34d399,stroke-width:2px;
 ```
 
 ---
 
-## 🚀 Environment Initialization & Setup
+## 🚀 Local Environment Initialization & Setup
 
 ### 1. Prerequisites
-* **Operating System**: Windows 11 (PowerShell Runtime)
-* **Python Engine**: Python 3.10+
-* **Local LLM Engine**: Installed and running [Ollama Engine](https://ollama.com)
+* **Operating System**: Windows 11 (PowerShell Isolation)
+* **Python Runtime**: Python 3.10+
+* **Local Inference Daemon**: [Ollama Runtime Engine](https://ollama.com) active with models pre-pulled:
+  ```powershell
+  ollama pull phi3
+  ollama pull nomic-embed-text
+  ```
 
 ### 2. Sandbox Setup & Virtual Environment Isolation
 ```powershell
-# Clone the repository
-git clone https://github.com
-cd Local-DocuBrain-RAG-Engine
+# Navigate to project root folder
+cd "F:\Local AI Library"
 
-# Initialize the workspace isolated environment
+# Initialize and activate isolated workspace
 python -m venv fresh_venv
 .\fresh_venv\Scripts\Activate.ps1
-
-# Upgrade foundational package wheels
-python -m pip install --upgrade pip setuptools wheel
 ```
 
-### 3. Dependency Deployment
-Install the core NLP parsing frameworks and vector engines:
+### 3. Production Framework Installation
 ```powershell
-pip install -r requirements.txt
+pip install llama-index llama-index-llms-ollama llama-index-embeddings-ollama pypdf
 ```
 
 ---
 
-## 🛠️ Ingestion & Execution Workflow
-
-### Step 1: Pre-load the Vector Data Store
-Place your targets inside the local data repository directory and run the data extraction layer:
+## 🛠️ Execution Specification
+Drop target document assets (PDF, TXT, or MD format) directly into your local `documents/` directory and execute the primary runtime orchestration file:
 ```powershell
-python ingest.py
+python app.py
 ```
-
-### Step 2: Query the RAG Brain
-Engage the continuous terminal orchestration loop to run inference on your documents:
-```powershell
-python query.py
-```
+On its first run, the framework builds the vector index from scratch. Subsequent boots read instantly from the local cached `db/` block.
 
 ---
 
 ## 📁 Repository Directory Matrix
 
+```text
 Local-DocuBrain-RAG-Engine/
 ├── fresh_venv/               # Isolated Local Virtual Environment (Ignored)
+├── db/                       # Persistent Vector Database Indices (Ignored Cache)
 ├── documents/                # Target ingestion directory for source context files
-├── .gitignore                # Absolute Local Isolation Matrix
-├── app.py                    # Core Local RAG Orchestration & Ingestion Engine
+├── .gitignore                # Production Isolation and Safety Tracking Matrix
+├── app.py                    # Core Unified LlamaIndex RAG Orchestration Engine
 └── README.md                 # System Overview & Architecture Documentation
-
+```
 
 ---
 
-## 🔐 Security & Engineering Hygiene
-The `.gitignore` engine strictly blocks the indexing of local vector binaries (`db/`), untracked documents (`data/`), and environment dependencies (`fresh_venv/`). This eliminates any accidental enterprise data exposure during collaborative workspace pushes.
+## 🔐 Security & Data Isolation
+The project's `.gitignore` asset completely isolates heavy background environment binaries (`fresh_venv/`), local database binaries (`db/`), and unindexed raw data files. This structure allows seamless team collaboration while ensuring private assets remain 100% confidential.
