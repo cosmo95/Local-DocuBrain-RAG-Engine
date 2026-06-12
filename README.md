@@ -77,20 +77,13 @@ python query.py
 
 ## 📁 Repository Directory Matrix
 
-```text
 Local-DocuBrain-RAG-Engine/
 ├── fresh_venv/               # Isolated Local Virtual Environment (Ignored)
-├── data/                     # Raw Context Documents (PDF, TXT, MD)
-├── db/                       # Localized Persistent Vector Index Files
-├── core/
-│   ├── __init__.py           # Package Init
-│   ├── embedder.py           # Text Processing & Vector Mapping Logic
-│   └── llm_handler.py        # Ollama Inference Interfacing Layer
+├── documents/                # Target ingestion directory for source context files
 ├── .gitignore                # Absolute Local Isolation Matrix
-├── ingest.py                 # File Tokenization & Vector Database Ingestion Layer
-├── query.py                  # CLI Question-Answering Orchestration Entrypoint
-└── README.md                 # System Overview Documentation
-```
+├── app.py                    # Core Local RAG Orchestration & Ingestion Engine
+└── README.md                 # System Overview & Architecture Documentation
+
 
 ---
 
