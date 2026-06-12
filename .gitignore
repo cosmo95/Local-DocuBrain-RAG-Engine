@@ -1,10 +1,52 @@
-# Ignore local database vectors and cache
-storage/
-.ipynb_checkpoints/
-
-# Ignore your private books and research papers
-documents/
-
-# Ignore local environment tracking
-ml_env/
+# ==========================================
+# 🐍 Python Runtime & Environment Isolation
+# ==========================================
+fresh_venv/
+venv/
+.venv/
+ENV/
+bin/
+lib/
+include/
+pyvenv.cfg
+*.pyc
 __pycache__/
+*.pyo
+*.pyd
+.pytest_cache/
+
+# ==========================================
+# 🧠 RAG Local Storage & Data Silos
+# ==========================================
+# Blocks raw data documents containing private context
+data/*
+!data/.gitkeep
+
+# Blocks local database persistent indices (Chroma, FAISS, LanceDB, etc.)
+db/
+vector_store/
+*.idx
+*.pkl
+*.sqlite3
+
+# ==========================================
+# 🪟 Windows System Cache Files
+# ==========================================
+Thumbs.db
+Desktop.ini
+Ehthumbs.db
+
+# ==========================================
+# 🔑 Environment Variables & Security Credentials
+# ==========================================
+.env
+.env.local
+.secret
+secrets.json
+# ==========================================
+# 🛑 Personal Engineering Documentation & Reports
+# ==========================================
+generate_report.py
+*.docx
+*.doc
+*.pdf
