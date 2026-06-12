@@ -1,77 +1,98 @@
-# Local-DocuBrain RAG Engine 🧠🤖
+# 🧠 Local-DocuBrain-RAG-Engine
 
-An enterprise-grade, local Retrieval-Augmented Generation (RAG) system built to parse, process, index, and query massive unstructured document ecosystems. This application is architected to run completely offline on local infrastructure to guarantee zero data leaks, corporate privacy, and strict intellectual property protection.
+An enterprise-grade, locally isolated Retrieval-Augmented Generation (RAG) engine. This system allows you to chat with complex local documentation, source files, and knowledge bases with absolute data privacy. It operates 100% offline using an optimized ingestion pipeline and local LLM inference models.
 
 ---
 
-## 🏗️ System Architecture & Workflow
+## 🎯 System Capabilities & Architecture
+* **Zero-Leak Data Privacy**: Designed for enterprise security boundaries. No data ever leaves your local environment (`fresh_venv`).
+* **Optimized Ingestion Pipeline**: Implements advanced structural text splitting and high-fidelity embedding generation for dense vector mapping.
+* **Deterministic Local Retrieval**: Uses a vectorized semantic search layer to inject hyper-relevant context windows directly into local LLM completion prompts.
+
+---
+
+## ⚙️ Core Data Workflow
 
 ```mermaid
 graph TD
-    A[Unstructured Docs: PDF/TXT] --> B[Smart Text Chunking & Overlap]
-    B --> C[Local Vector Embeddings Engine]
-    C --> D[(ChromaDB / FAISS Vector Store)]
-    E[User Query via Local Interface] --> F[Semantic Context Retrieval]
+    A[Raw Source Docs/PDFs] --> B(Recursive Text Splitter)
+    B --> C(Local Embedding Engine)
+    C --> D[Vector Store DB Index]
+    E[User Query] --> F(Semantic Similarity Search)
     D --> F
-    F --> G[Local LLM Response Synthesis]
-    G --> H[Secure, Citated Answer Output]
+    F -->|Context-Infused Prompt| G[Local Ollama Daemon]
+    G --> H[Precise Deterministic Answer]
+
+    style B fill:#2a2a2a,stroke:#4f46e5,stroke-width:2px;
+    style D fill:#1e1b4b,stroke:#818cf8,stroke-width:2px;
+    style H fill:#064e3b,stroke:#34d399,stroke-width:2px;
 ```
 
 ---
 
-## 📌 Core Features
+## 🚀 Environment Initialization & Setup
 
-* **Strict On-Premises Privacy**: 100% data control with zero external cloud API usage.
-* **Intelligent Document Parsing**: Automated content parsing, semantic cleaning, and sliding-window chunking.
-* **High-Speed Vector Search**: Instant lookup of deep semantic relationships utilizing high-density local vector stores.
-* **Context-Aware Synthesis**: Limits LLM hallucinations by injecting highly relevant source documents explicitly into the prompt context window.
+### 1. Prerequisites
+* **Operating System**: Windows 11 (PowerShell Runtime)
+* **Python Engine**: Python 3.10+
+* **Local LLM Engine**: Installed and running [Ollama Engine](https://ollama.com)
 
----
-
-## 🛠️ Technical Stack
-
-* **Language Platform**: Python 3.10+
-* **Orchestration Framework**: LangChain / LlamaIndex
-* **Storage Platform**: ChromaDB / FAISS (Vector Database)
-* **Embedding Model Ecosystem**: Hugging Face Transformers (e.g., `all-MiniLM-L6-v2`)
-* **Local Inference Runtime**: Ollama / Llama.cpp (Running local models like Llama 3 or Mistral)
-
----
-
-## 🚀 Quick Setup & Local Execution
-
-### 1. Prerequisite Installations
-Ensure you have Python installed and your local LLM engine active (e.g., Ollama running locally).
-
-### 2. Environment Configurations
-Clone this repository and set up a virtual ecosystem environment:
-```bash
+### 2. Sandbox Setup & Virtual Environment Isolation
+```powershell
 # Clone the repository
 git clone https://github.com
 cd Local-DocuBrain-RAG-Engine
 
-# Initialize and activate virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows use: venv\Scripts\activate
+# Initialize the workspace isolated environment
+python -m venv fresh_venv
+.\fresh_venv\Scripts\Activate.ps1
 
-# Install production dependencies
+# Upgrade foundational package wheels
+python -m pip install --upgrade pip setuptools wheel
+```
+
+### 3. Dependency Deployment
+Install the core NLP parsing frameworks and vector engines:
+```powershell
 pip install -r requirements.txt
-```
-
-### 3. Initialize Ingestion & Processing Pipeline
-Place your target analysis files (PDFs, Markdown, text files) directly into the raw source data directory (e.g., `/docs`), then run the vectorized building pipeline:
-```bash
-python ingest.py
-```
-
-### 4. Query the System Interface
-Execute the semantic pipeline engine loop to interact live with your secure localized document corpus:
-```bash
-python query.py --prompt "What are the Q3 target compliance metrics mentioned in the file?"
 ```
 
 ---
 
-## 📊 Evaluation & Verification Parameters
-* **Chunk Strategy**: 500-character chunk sizes containing a 50-character overlap window to preserve document paragraph context.
-* **Retrieval Mode**: Top-k similarity metrics (\(k=3\)) using Cosine Distance calculations to extract optimal semantic data blocks.
+## 🛠️ Ingestion & Execution Workflow
+
+### Step 1: Pre-load the Vector Data Store
+Place your targets inside the local data repository directory and run the data extraction layer:
+```powershell
+python ingest.py
+```
+
+### Step 2: Query the RAG Brain
+Engage the continuous terminal orchestration loop to run inference on your documents:
+```powershell
+python query.py
+```
+
+---
+
+## 📁 Repository Directory Matrix
+
+```text
+Local-DocuBrain-RAG-Engine/
+├── fresh_venv/               # Isolated Local Virtual Environment (Ignored)
+├── data/                     # Raw Context Documents (PDF, TXT, MD)
+├── db/                       # Localized Persistent Vector Index Files
+├── core/
+│   ├── __init__.py           # Package Init
+│   ├── embedder.py           # Text Processing & Vector Mapping Logic
+│   └── llm_handler.py        # Ollama Inference Interfacing Layer
+├── .gitignore                # Absolute Local Isolation Matrix
+├── ingest.py                 # File Tokenization & Vector Database Ingestion Layer
+├── query.py                  # CLI Question-Answering Orchestration Entrypoint
+└── README.md                 # System Overview Documentation
+```
+
+---
+
+## 🔐 Security & Engineering Hygiene
+The `.gitignore` engine strictly blocks the indexing of local vector binaries (`db/`), untracked documents (`data/`), and environment dependencies (`fresh_venv/`). This eliminates any accidental enterprise data exposure during collaborative workspace pushes.
